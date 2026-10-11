@@ -1,0 +1,54 @@
+{
+  "kit": "0.2.0",
+  "profile": {
+    "name": "trust-chain-testnet",
+    "keriaUrl": "https://agent.test.trustalys.net",
+    "bootUrl": "https://boot.test.trustalys.net",
+    "keriaPublicUrl": "https://keria.test.trustalys.net",
+    "witnesses": [
+      {
+        "aid": "BDfKKlZ_dUa8QLVd3E1yookw5dkeGda2nwYfkZoW02Y2",
+        "oobi": "https://wit1.test.trustalys.net/oobi/BDfKKlZ_dUa8QLVd3E1yookw5dkeGda2nwYfkZoW02Y2/controller"
+      },
+      {
+        "aid": "BM97ygYkS7KE4fIgvqbTQw-kYIw-ENEWz-oTXg_Xfl5h",
+        "oobi": "https://wit2.test.trustalys.net/oobi/BM97ygYkS7KE4fIgvqbTQw-kYIw-ENEWz-oTXg_Xfl5h/controller"
+      },
+      {
+        "aid": "BAqW-XV7QqW-GsOaZxfm8RTbPrWc_-QrpJevF7rL2FQQ",
+        "oobi": "https://wit3.test.trustalys.net/oobi/BAqW-XV7QqW-GsOaZxfm8RTbPrWc_-QrpJevF7rL2FQQ/controller"
+      }
+    ]
+  },
+  "witnesses": [
+    {
+      "name": "witness-1",
+      "aid": "BDfKKlZ_dUa8QLVd3E1yookw5dkeGda2nwYfkZoW02Y2",
+      "url": "https://wit1.test.trustalys.net",
+      "oobi": "https://wit1.test.trustalys.net/oobi/BDfKKlZ_dUa8QLVd3E1yookw5dkeGda2nwYfkZoW02Y2/controller"
+    },
+    {
+      "name": "witness-2",
+      "aid": "BM97ygYkS7KE4fIgvqbTQw-kYIw-ENEWz-oTXg_Xfl5h",
+      "url": "https://wit2.test.trustalys.net",
+      "oobi": "https://wit2.test.trustalys.net/oobi/BM97ygYkS7KE4fIgvqbTQw-kYIw-ENEWz-oTXg_Xfl5h/controller"
+    },
+    {
+      "name": "witness-3",
+      "aid": "BAqW-XV7QqW-GsOaZxfm8RTbPrWc_-QrpJevF7rL2FQQ",
+      "url": "https://wit3.test.trustalys.net",
+      "oobi": "https://wit3.test.trustalys.net/oobi/BAqW-XV7QqW-GsOaZxfm8RTbPrWc_-QrpJevF7rL2FQQ/controller"
+    }
+  ],
+  "schemaServer": {
+    "url": "https://schema.test.trustalys.net",
+    "oobis": {
+      "EBfdlu8R27Fbx-ehrqwImnK-8Cm79sqbAQ4MmvEAYqao": "https://schema.test.trustalys.net/oobi/EBfdlu8R27Fbx-ehrqwImnK-8Cm79sqbAQ4MmvEAYqao",
+      "ENPXp1vQzRF6JwIuS-mp2U8Uf1MoADoP_GqQ62VsDZWY": "https://schema.test.trustalys.net/oobi/ENPXp1vQzRF6JwIuS-mp2U8Uf1MoADoP_GqQ62VsDZWY",
+      "EKA57bKBKxr_kN7iN5i7lMUxpMG-s19dRcmov1iDxz-E": "https://schema.test.trustalys.net/oobi/EKA57bKBKxr_kN7iN5i7lMUxpMG-s19dRcmov1iDxz-E",
+      "EBNaNu-M9P5cgrnfl2Fvymy4E_jvxxyjb70PRtiANlJy": "https://schema.test.trustalys.net/oobi/EBNaNu-M9P5cgrnfl2Fvymy4E_jvxxyjb70PRtiANlJy",
+      "EH6ekLjSr8V32WyFbGe1zXjTzFs9PkTYmupJ9H65O14g": "https://schema.test.trustalys.net/oobi/EH6ekLjSr8V32WyFbGe1zXjTzFs9PkTYmupJ9H65O14g",
+      "EEy9PkikFcANV1l7EHukCeXqrzT1hNZjGlUk7wuMO5jw": "https://schema.test.trustalys.net/oobi/EEy9PkikFcANV1l7EHukCeXqrzT1hNZjGlUk7wuMO5jw"
+    }
+  }
+}

@@ -1,0 +1,151 @@
+<!doctype html>
+<!-- The page for testers (E6, contracts/testers-page.md). site/tools/testers.mjs fills each place in double braces
+     from the kit's network description and writes testers.html; never edit testers.html by hand. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>For testers: Trust Chain test network</title>
+  <meta name="description" content="How to connect to the Trust Chain test network with the Trust Chain SDK: its profile, witnesses and addresses.">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <main>
+    <p class="back"><a href="index.html">Trust Chain test network</a></p>
+    <h1>For testers</h1>
+
+    <section aria-labelledby="before">
+      <h2 id="before">Before you start</h2>
+      <p>
+        The network usually runs, but it is a best-effort service. It may be off at any time, with
+        no notice. Do not build anything that depends on it.
+      </p>
+      <p>
+        All data on the network is deleted on the first Monday of each month at 06:00 UTC, and at
+        early resets announced on the main page. Your agents and identifiers go with it.
+      </p>
+      <p>
+        Whether it runs now: see the <a href="index.html">main page</a>. Using the network means you
+        accept its <a href="terms.html">terms</a>.
+      </p>
+    </section>
+
+    <section aria-labelledby="sdk-docs">
+      <h2 id="sdk-docs">The SDK's documentation</h2>
+      <p>
+        How to use the Trust Chain SDK is explained in its documentation, in the SDK's repository.
+        To get access, ask through <a href="https://www.trustalys.com" rel="noopener">www.trustalys.com</a>,
+        and give your GitHub user name.
+      </p>
+      <p>
+        The SDK itself is on npm: <code>@trustalys/trust-chain-sdk</code>, version 0.7.0 or later.
+      </p>
+    </section>
+
+    <section aria-labelledby="connect">
+      <h2 id="connect">Connect</h2>
+      <p>
+        Follow the SDK's getting-started guide. Skip its step 1, which starts a test network on
+        your computer. Connect with this network's profile instead, as the page "Connecting to
+        KERIA", section "Connect with a profile", shows.
+      </p>
+      <p>The profile:</p>
+      <pre id="profile">{
+  &quot;name&quot;: &quot;trust-chain-testnet&quot;,
+  &quot;keriaUrl&quot;: &quot;https://agent.test.trustalys.net&quot;,
+  &quot;bootUrl&quot;: &quot;https://boot.test.trustalys.net&quot;,
+  &quot;keriaPublicUrl&quot;: &quot;https://keria.test.trustalys.net&quot;,
+  &quot;witnesses&quot;: [
+    {
+      &quot;aid&quot;: &quot;BDfKKlZ_dUa8QLVd3E1yookw5dkeGda2nwYfkZoW02Y2&quot;,
+      &quot;oobi&quot;: &quot;https://wit1.test.trustalys.net/oobi/BDfKKlZ_dUa8QLVd3E1yookw5dkeGda2nwYfkZoW02Y2/controller&quot;
+    },
+    {
+      &quot;aid&quot;: &quot;BM97ygYkS7KE4fIgvqbTQw-kYIw-ENEWz-oTXg_Xfl5h&quot;,
+      &quot;oobi&quot;: &quot;https://wit2.test.trustalys.net/oobi/BM97ygYkS7KE4fIgvqbTQw-kYIw-ENEWz-oTXg_Xfl5h/controller&quot;
+    },
+    {
+      &quot;aid&quot;: &quot;BAqW-XV7QqW-GsOaZxfm8RTbPrWc_-QrpJevF7rL2FQQ&quot;,
+      &quot;oobi&quot;: &quot;https://wit3.test.trustalys.net/oobi/BAqW-XV7QqW-GsOaZxfm8RTbPrWc_-QrpJevF7rL2FQQ/controller&quot;
+    }
+  ]
+}</pre>
+      <p>
+        A program can read it from <code>https://test.trustalys.net/network.json</code>: the field
+        <code>profile</code>.
+      </p>
+    </section>
+
+    <section aria-labelledby="witnesses">
+      <h2 id="witnesses">The witnesses</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Identifier and OOBI</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>witness-1</td><td><code>BDfKKlZ_dUa8QLVd3E1yookw5dkeGda2nwYfkZoW02Y2</code><br><code>https://wit1.test.trustalys.net/oobi/BDfKKlZ_dUa8QLVd3E1yookw5dkeGda2nwYfkZoW02Y2/controller</code></td></tr>
+          <tr><td>witness-2</td><td><code>BM97ygYkS7KE4fIgvqbTQw-kYIw-ENEWz-oTXg_Xfl5h</code><br><code>https://wit2.test.trustalys.net/oobi/BM97ygYkS7KE4fIgvqbTQw-kYIw-ENEWz-oTXg_Xfl5h/controller</code></td></tr>
+          <tr><td>witness-3</td><td><code>BAqW-XV7QqW-GsOaZxfm8RTbPrWc_-QrpJevF7rL2FQQ</code><br><code>https://wit3.test.trustalys.net/oobi/BAqW-XV7QqW-GsOaZxfm8RTbPrWc_-QrpJevF7rL2FQQ/controller</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section aria-labelledby="addresses">
+      <h2 id="addresses">Addresses</h2>
+      <p>
+        Your program reaches these addresses. A Chrome extension lists them in its
+        <code>host_permissions</code>:
+      </p>
+      <pre id="host-permissions">&quot;https://agent.test.trustalys.net/*&quot;,
+&quot;https://keria.test.trustalys.net/*&quot;,
+&quot;https://boot.test.trustalys.net/*&quot;,
+&quot;https://wit1.test.trustalys.net/*&quot;,
+&quot;https://wit2.test.trustalys.net/*&quot;,
+&quot;https://wit3.test.trustalys.net/*&quot;,
+&quot;https://schema.test.trustalys.net/*&quot;</pre>
+    </section>
+
+    <section aria-labelledby="schemas">
+      <h2 id="schemas">Schemas</h2>
+      <p>The schema server is at <code>https://schema.test.trustalys.net</code>. The OOBIs of the vLEI schemas it holds:</p>
+      <ul class="oobis">
+        <li>Qualified vLEI Issuer Credential (QVI):<br><code>https://schema.test.trustalys.net/oobi/EBfdlu8R27Fbx-ehrqwImnK-8Cm79sqbAQ4MmvEAYqao</code></li>
+        <li>Legal Entity vLEI Credential (LE):<br><code>https://schema.test.trustalys.net/oobi/ENPXp1vQzRF6JwIuS-mp2U8Uf1MoADoP_GqQ62VsDZWY</code></li>
+        <li>OOR Authorization vLEI Credential:<br><code>https://schema.test.trustalys.net/oobi/EKA57bKBKxr_kN7iN5i7lMUxpMG-s19dRcmov1iDxz-E</code></li>
+        <li>Legal Entity Official Organizational Role vLEI Credential (OOR):<br><code>https://schema.test.trustalys.net/oobi/EBNaNu-M9P5cgrnfl2Fvymy4E_jvxxyjb70PRtiANlJy</code></li>
+        <li>ECR Authorization vLEI Credential:<br><code>https://schema.test.trustalys.net/oobi/EH6ekLjSr8V32WyFbGe1zXjTzFs9PkTYmupJ9H65O14g</code></li>
+        <li>Legal Entity Engagement Context Role vLEI Credential (ECR):<br><code>https://schema.test.trustalys.net/oobi/EEy9PkikFcANV1l7EHukCeXqrzT1hNZjGlUk7wuMO5jw</code></li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="chain">
+      <h2 id="chain">Your own test chain</h2>
+      <p>
+        A page in the SDK's documentation that builds your own test GLEIF root, QVI and legal entity
+        is coming.
+      </p>
+    </section>
+
+    <section aria-labelledby="questions">
+      <h2 id="questions">Questions</h2>
+      <p>
+        Open an issue in
+        <a href="https://github.com/trustalys/trust-chain-testnet-site/issues">trustalys/trust-chain-testnet-site</a>.
+      </p>
+    </section>
+
+    <p class="note">This page has not been checked against the network yet.</p>
+  </main>
+  <footer>
+    <p>
+      Run by Trustalys ·
+      <a href="https://www.trustalys.com" rel="noopener">www.trustalys.com</a> ·
+      <a href="https://github.com/trustalys" rel="noopener">GitHub</a> ·
+      <a href="https://search.gleif.org/#/record/9845009582145ER9B935" rel="noopener">LEI 9845009582145ER9B935</a>
+    </p>
+    <p>© 2026 Trustalys. All rights reserved.</p>
+  </footer>
+</body>
+</html>

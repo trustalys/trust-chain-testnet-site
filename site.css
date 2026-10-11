@@ -116,3 +116,42 @@ code {
 .terms li {
   margin-bottom: 0.6rem;
 }
+
+/* The page for testers: long identifiers wrap, and code blocks scroll inside themselves, so the
+   page never scrolls sideways at phone width. */
+pre {
+  overflow-x: auto;
+  padding: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.4rem 0.5rem 0.4rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+td:first-child {
+  white-space: nowrap;
+}
+
+td code,
+.oobis code {
+  overflow-wrap: anywhere;
+}
+
+.oobis li {
+  margin-bottom: 0.3rem;
+}
