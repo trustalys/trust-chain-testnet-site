@@ -1,0 +1,103 @@
+/* The public site of the Trust Chain test network (E5). System fonts only: nothing from another
+   server. Light and dark follow the visitor's setting. */
+
+:root {
+  --text: #1d2125;
+  --muted: #5a636c;
+  --background: #fbfbfa;
+  --line: #dde1e4;
+  --link: #0b5cad;
+  --runs: #17703a;
+  --down: #8a5300;
+  --unreachable: #8a5300;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #e7e9eb;
+    --muted: #a3abb3;
+    --background: #15181b;
+    --line: #2d3338;
+    --link: #79b5f2;
+    --runs: #6fd394;
+    --down: #f0b35a;
+    --unreachable: #f0b35a;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+main {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 4rem;
+}
+
+h1 {
+  font-size: 1.9rem;
+  line-height: 1.2;
+  margin: 0 0 1rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin: 2.2rem 0 0.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line);
+}
+
+a {
+  color: var(--link);
+}
+
+code {
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+}
+
+.status {
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding-left: 0.8rem;
+  border-left: 4px solid var(--line);
+}
+
+.status.runs {
+  color: var(--runs);
+  border-color: var(--runs);
+}
+
+.status.down,
+.status.unreachable {
+  color: var(--down);
+  border-color: var(--down);
+}
+
+.status.checking {
+  color: var(--muted);
+}
+
+.note,
+.back {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.early {
+  font-weight: 600;
+}
+
+.terms li {
+  margin-bottom: 0.6rem;
+}

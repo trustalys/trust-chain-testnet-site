@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self' https://schema.test.trustalys.net; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Trust Chain test network</title>
+  <meta name="description" content="A public test network for the Trust Chain SDK: whether it runs now, the reset schedule and the terms.">
+  <link rel="stylesheet" href="site.css">
+  <script type="module" src="site.js"></script>
+</head>
+<body>
+  <main>
+    <h1>Trust Chain test network</h1>
+    <p>
+      A public network for trying the Trust Chain SDK: an agent service (KERIA), three witnesses
+      and a schema server, at addresses under <code>test.trustalys.net</code>.
+      It is for testing only, and its data is deleted at each reset.
+    </p>
+
+    <section aria-labelledby="now">
+      <h2 id="now">Now</h2>
+      <p id="status" class="status" role="status" aria-live="polite">
+        Turn on JavaScript to see whether the network runs now.
+      </p>
+      <p class="note">
+        The network runs only when testers need it. It may be off at any time.
+      </p>
+    </section>
+
+    <section aria-labelledby="resets">
+      <h2 id="resets">Resets</h2>
+      <p>
+        At each reset, all data on the network is deleted: agents, identifiers and what the
+        witnesses hold. The witnesses keep their identifiers.
+      </p>
+      <p>
+        Resets happen on <strong>the first Monday of each month at 06:00 UTC</strong>. An early
+        reset is announced here at least 2 days before.
+      </p>
+      <p id="next-reset" hidden></p>
+      <p id="early-reset" class="early" hidden></p>
+      <p id="last-reset" hidden></p>
+      <p id="notices-error" class="note" hidden></p>
+    </section>
+
+    <section aria-labelledby="rules">
+      <h2 id="rules">Terms</h2>
+      <p>
+        Using the network means you accept its <a href="terms.html">terms</a>: test use only, no
+        personal data, no real LEIs, no promise that it runs.
+      </p>
+    </section>
+  </main>
+</body>
+</html>
