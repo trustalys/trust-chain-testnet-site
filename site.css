@@ -43,6 +43,21 @@ main {
   padding: 2.5rem 1rem 4rem;
 }
 
+/* As wide as main's text, so its line meets the section lines above. */
+footer {
+  width: calc(100% - 2rem);
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem 0 2rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+footer p {
+  margin: 0.3rem 0;
+}
+
 h1 {
   font-size: 1.9rem;
   line-height: 1.2;
