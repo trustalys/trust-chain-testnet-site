@@ -32,6 +32,139 @@
       </p>
     </section>
 
+    <section aria-labelledby="quick-start">
+      <h2 id="quick-start">Quick start</h2>
+      <p>
+        In about 5 minutes, check that your computer reaches every part of the network, and see the
+        few lines a program needs to use it. You need Node.js 22 or later.
+      </p>
+
+      <h3>Run it</h3>
+      <table>
+        <thead>
+          <tr><th>Type</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>mkdir my-first-test &amp;&amp; cd my-first-test</code></td><td>Makes an empty folder for the test, and goes into it.</td></tr>
+          <tr><td><code>npm init -y &amp;&amp; npm pkg set type=module</code></td><td>Makes it a Node.js project that uses <code>import</code>.</td></tr>
+          <tr><td><code>npm install @trustalys/trust-chain-sdk</code></td><td>Installs the SDK from npm.</td></tr>
+          <tr><td><code>curl -O https://test.trustalys.net/quickstart.js</code></td><td>Downloads the quick start.</td></tr>
+          <tr><td><code>node quickstart.js</code></td><td>Runs it. It takes about 20 seconds.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>What you should see</h3>
+      <pre>1. Read the profile of the test network: 3 witnesses.
+2. Alice and Bob are connected, each with a new agent: E... and E....
+3. Alice and Bob each have an identifier, confirmed by the network's 3 witnesses.
+4. Alice resolved Bob's OOBI: Alice knows Bob.
+5. Alice resolved the QVI schema from the schema server.
+6. Alice: E...
+   OOBI:  https://keria.test.trustalys.net/oobi/E.../agent/E...
+   Bob:   E...
+   OOBI:  https://keria.test.trustalys.net/oobi/E.../agent/E...
+Your setup works with the test network. Next: the SDK's guides.</pre>
+      <p>
+        Each line is one part of the network that answered: the site's profile (1), KERIA, where each
+        person's agent lives (2), the three witnesses (3), KERIA's public address (4), and the schema
+        server (5). When a step fails, the last line says which one. If the network does not run now,
+        the <a href="index.html">main page</a> says so.
+      </p>
+
+      <h3>Now read it</h3>
+      <p>
+        Open <code>quickstart.js</code>: it is the starting point for your own program. Its steps:
+      </p>
+      <ol>
+        <li>Read the network's profile from <code>network.json</code>: its addresses and witnesses.</li>
+        <li>Connect Alice and Bob with the profile. Each gets a new passcode and a new agent.</li>
+        <li>Each creates an identifier. With a profile, the SDK uses the network's witnesses.</li>
+        <li>Alice resolves Bob's OOBI, an address where Bob's key events can be read.</li>
+        <li>Alice resolves the QVI schema, and checks that it is the schema expected.</li>
+        <li>It prints the identifiers and their OOBIs, to try from another tool.</li>
+      </ol>
+      <p>Each step names the SDK guide that goes further. The whole file:</p>
+      <pre id="quickstart">// Quick start for the Trust Chain test network: https://test.trustalys.net/testers.html
+//
+// It proves that your computer reaches every part of the test network, and shows the few lines a
+// program needs to use it. Run it in a folder where the SDK is installed:
+//
+//   npm install @trustalys/trust-chain-sdk
+//   node quickstart.js
+//
+// For your own program, keep steps 1 and 2: read the network's profile, and pass it to connect.
+// Everything after that is the same as in the SDK's guides.
+//
+// Test network only: it may be off at any time, and all data is deleted at each monthly reset.
+import { connect, newPasscode } from '@trustalys/trust-chain-sdk';
+
+const NETWORK = 'https://test.trustalys.net/network.json';
+// The Qualified vLEI Issuer (QVI) credential schema, one of the six vLEI schemas the network holds.
+const QVI_SCHEMA = 'EBfdlu8R27Fbx-ehrqwImnK-8Cm79sqbAQ4MmvEAYqao';
+const WAIT = { limitMs: 120_000 };
+
+let step = 'reading the network description';
+try {
+  // Step 1. Read the network's profile: its addresses and witnesses.
+  // SDK guide: &quot;Connecting to KERIA&quot;, section &quot;Connect with a profile&quot;.
+  const network = await (await fetch(NETWORK)).json();
+  const profile = network.profile;
+  console.log(`1. Read the profile of the test network: ${profile.witnesses.length} witnesses.`);
+
+  // Step 2. Connect Alice and Bob, each with a new passcode and a new agent on the network.
+  // A passcode unlocks a person's keys: a real application keeps it secret.
+  // SDK guide: &quot;Getting started&quot;, step 2.
+  step = 'connecting to KERIA';
+  const alice = await connect({ passcode: await newPasscode(), create: true, profile });
+  const bob = await connect({ passcode: await newPasscode(), create: true, profile });
+  console.log(`2. Alice and Bob are connected, each with a new agent: ${alice.agentAid} and ${bob.agentAid}.`);
+
+  // Step 3. Each creates an identifier. The network's witnesses confirm it.
+  // SDK guide: &quot;Getting started&quot;, step 3.
+  step = 'creating the identifiers';
+  const aliceId = await alice.createIdentifier({ name: 'alice' }, undefined, WAIT);
+  const bobId = await bob.createIdentifier({ name: 'bob' }, undefined, WAIT);
+  if (aliceId.status !== 'done' || bobId.status !== 'done') {
+    throw new Error(`the witnesses did not confirm in time; still waiting for: ${[...aliceId.missing, ...bobId.missing].join(', ')}`);
+  }
+  const witnesses = aliceId.value.keyState.witnesses.length;
+  console.log(`3. Alice and Bob each have an identifier, confirmed by the network's ${witnesses} witnesses.`);
+
+  // Step 4. Alice resolves Bob's OOBI, an address where Bob's key events can be read. Now she
+  // knows Bob as a contact. SDK guide: &quot;Getting started&quot;, step 4.
+  step = 'resolving the OOBI';
+  const bobOobi = await bob.getOobi('bob', { kind: 'agent' });
+  const contact = await alice.resolveOobi(bobOobi, 'bob', WAIT);
+  if (contact.status !== 'done') throw new Error(`Bob's OOBI was not resolved: ${contact.missing.join(', ')}`);
+  console.log('4. Alice resolved Bob\'s OOBI: Alice knows Bob.');
+
+  // Step 5. Alice resolves the QVI schema from the network's schema server, and checks that it is
+  // the schema expected. SDK guide: &quot;Verifying credentials&quot;, section &quot;Fetch the schemas&quot;.
+  step = 'resolving a schema';
+  const schema = await alice.resolveSchema({ oobi: network.schemaServer.oobis[QVI_SCHEMA], expectedSaid: QVI_SCHEMA }, WAIT);
+  if (schema.status !== 'done') throw new Error(`the QVI schema was not resolved: ${schema.missing.join(', ')}`);
+  console.log('5. Alice resolved the QVI schema from the schema server.');
+
+  // Step 6. The identifiers and their OOBIs, to try from another tool or another computer.
+  const aliceOobi = await alice.getOobi('alice', { kind: 'agent' });
+  console.log(`6. Alice: ${aliceId.value.aid}\n   OOBI:  ${aliceOobi}`);
+  console.log(`   Bob:   ${bobId.value.aid}\n   OOBI:  ${bobOobi}`);
+  console.log('Your setup works with the test network. Next: the SDK\'s guides.');
+} catch (error) {
+  console.log(`Failed while ${step}: ${error?.code ? `${error.code}: ` : ''}${error?.message ?? error}`);
+  console.log('If the network does not run now, the main page says so: https://test.trustalys.net');
+  process.exitCode = 1;
+}
+</pre>
+
+      <h3>Build your own</h3>
+      <p>
+        Keep steps 1 and 2: read the profile, and pass it to <code>connect</code>. That is all a
+        program needs to work with this network. Everything after that is the same as in the SDK's
+        guides.
+      </p>
+    </section>
+
     <section aria-labelledby="sdk-docs">
       <h2 id="sdk-docs">The SDK's documentation</h2>
       <p>
@@ -47,9 +180,9 @@
     <section aria-labelledby="connect">
       <h2 id="connect">Connect</h2>
       <p>
-        Follow the SDK's getting-started guide. Skip its step 1, which starts a test network on
-        your computer. Connect with this network's profile instead, as the page "Connecting to
-        KERIA", section "Connect with a profile", shows.
+        The SDK's guides work on this network as they are, with one change: connect with this
+        network's profile, as step 2 of the quick start does, instead of the addresses of a test
+        network on your computer. In the getting-started guide, skip its step 1.
       </p>
       <p>The profile:</p>
       <pre id="profile">{
@@ -80,7 +213,7 @@
 
     <section aria-labelledby="witnesses">
       <h2 id="witnesses">The witnesses</h2>
-      <table>
+      <table class="witnesses">
         <thead>
           <tr><th>Name</th><th>Identifier and OOBI</th></tr>
         </thead>
