@@ -1,5 +1,5 @@
 {
-  "kit": "0.2.0",
+  "kit": "0.3.0",
   "profile": {
     "name": "trust-chain-testnet",
     "keriaUrl": "https://agent.test.trustalys.net",
